@@ -1,38 +1,47 @@
-import React from "react";
-import {Table, Button} from 'react-bootstrap'
+import React, {Component} from "react";
+import {Table,} from 'react-bootstrap'
 
-const Persons = () => {
+const urlCharacters = 'https://www.joergoertel.com/Week-13-CA3/api/info/starwars-characters';
+
+export default class Characters extends Component {
+constructor(props) {
+  super(props);
+  this.state = {characters: []}
+    ;
+  }
+  
+  async componentDidMount() {
+      //async fetchCharactersFromBackend(){
+        const res = await fetch(urlCharacters);
+        const data = await res.json();
+        const newData = data.map(e => JSON.parse(e));
+        console.log(newData);
+        this.setState({characters: newData});
+        }
+
+render() {
   return (
-   <div>
-  <h2>Persons table</h2>
-  <Table striped bordered hover>
-
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-    </Table>;
-    
-    </div>
+    <div>
+    <h2>Persons table</h2>
+    <Table striped bordered hover>
+  
+      <thead>
+        <tr>
+          <th>Character Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.renderCharacters()}
+      </tbody>
+      </Table>;
+      
+      </div>
   );
-};
+}
 
-export default Persons;
+renderCharacters() {
+  return this.state.characters.map(e => {
+      return (<tr key={e.name}><td>{e.name}</td></tr>)
+    }); 
+  };
+}
