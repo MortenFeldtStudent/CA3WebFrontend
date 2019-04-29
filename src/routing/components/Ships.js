@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Table,} from 'react-bootstrap'
 
-const urlShips = 'https://techjahn.dk/Week-13-CA3/api/info/starwars-ships';
+const urlShips = 'https://techjahn.dk/ca3backend/api/info/starwars-ships';
 
 export default class Characters extends Component {
 constructor(props) {
